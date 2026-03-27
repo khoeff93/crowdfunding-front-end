@@ -1,0 +1,36 @@
+.fundraiser-card {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: none;
+  background-color: white;
+  transition: box-shadow 0.2s;
+}
+
+.fundraiser-card:hover {
+  box-shadow: 0 4px 16px rgba(45, 87, 32, 0.3); /* #2D5720 tinted shadow */
+}
+
+.fundraiser-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+  background-color: #F9F6F6; /* accent colour as image placeholder */
+}
+
+.fundraiser-card a {
+  text-decoration: none;
+  color: #2D5720; /* CTA colour for the title link */
+}
+
+.fundraiser-card h3 {
+  padding: 12px;
+  margin: 0;
+  font-size: 16px;
+}
+
+.fundraiser-card h3:hover {
+  color: #79E97B; /* accent colour on hover */
+}

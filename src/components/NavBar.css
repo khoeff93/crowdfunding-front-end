@@ -1,0 +1,54 @@
+/* ---- NAVBAR ---- */
+nav {
+  display: flex;
+  align-items: center;
+  padding: 16px 32px;
+  border-bottom: 1px solid #ccc;
+  background-color: #F9F6F6;
+  position: relative;
+}
+
+.nav-logo img {
+  height: 90px;
+  display: block;
+  cursor: pointer;
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #1a1a1a;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 12px;
+  margin-left: auto;
+}
+
+/* ---- BUTTON ---- */
+button {
+  background-color: #2D5720;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100px;
+}
+
+button:hover {
+  background-color: #79E97B;
+  color: #1a1a1a;
+}
