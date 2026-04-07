@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { AuthContext } from "./AuthProvider";
 import postSignUp from "../api/post-signup";
 
 function SignUpForm() {
     const navigate = useNavigate();
+    const { auth } = useContext(AuthContext);
 
     const [credentials, setCredentials] = useState({
         username: "",
@@ -38,34 +39,22 @@ function SignUpForm() {
         <form>
             <div>
                 <label htmlFor="username">Username:</label>
-                <input
-                    type="text"
-                    id="username"
-                    placeholder="Enter username"
-                    onChange={handleChange}
-                />
+                <input type="text" id="username" placeholder="Enter username" onChange={handleChange} />
             </div>
             <div>
                 <label htmlFor="email">Email:</label>
-                <input
-                    type="email"
-                    id="email"
-                    placeholder="Enter email"
-                    onChange={handleChange}
-                />
+                <input type="email" id="email" placeholder="Enter email" onChange={handleChange} />
             </div>
             <div>
                 <label htmlFor="password">Password:</label>
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="Enter password"
-                    onChange={handleChange}
-                />
+                <input type="password" id="password" placeholder="Enter password" onChange={handleChange} />
             </div>
-            <button type="submit" onClick={handleSubmit}>
-                Sign Up
-            </button>
+
+            {!auth.token && (
+                <button type="submit" onClick={handleSubmit}>
+                    Sign Up
+                </button>
+            )}
         </form>
     );
 }

@@ -9,11 +9,11 @@ function ContactForm() {
   }
 
   if (submitted) {
-    return <div className="contact-form"><p>Thank you for your request!</p></div>;
+    return <div className="contact-form" id="contact"><p>Thank you for your request!</p></div>;
   }
 
   return (
-    <div className="contact-form">
+    <div className="contact-form" id="contact">
       <h2>Contact Us</h2>
       <form onSubmit={handleSubmit}>
         <label>Name</label>

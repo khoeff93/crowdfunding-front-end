@@ -12,6 +12,29 @@ main {
   padding: 32px;
 }
 
+/* ---- ABOUT SECTION ---- */
+.about-section {
+  max-width: 100%;
+  width: 100%;
+  text-align: center;
+  background-color: #2D5720;
+  border-radius: 12px;
+  padding: 40px 60px;
+}
+
+.about-section h2 {
+  font-size: 24px;
+  margin-bottom: 12px;
+  color: white;
+}
+
+.about-section p {
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0 0 10px;
+}
+
 /* ---- FUNDRAISER GRID ---- */
 #fundraiser-list {
   display: flex;
@@ -21,22 +44,40 @@ main {
   gap: 40px;
 }
 
-/* ---- CARDS ---- */
-.card {
-  background-color: white;
-  border-radius: 8px;
-  padding: 16px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  width: 200px;
-}
-
 /* ---- LEADERBOARD ---- */
 .leaderboard-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  column-gap: 10px;
+  grid-template-columns: repeat(5, 1fr);  /* 5 columns = 2 rows of 5 */
+  column-gap: 20px;
   row-gap: 10px;
-  width: 80px;
+  width: 100%;
+}
+
+.card {
+  background-color: white;
+  border-radius: 8px;
+  padding: 6px;        /* ← smaller padding */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  width: 90px;        /* ← fixed smaller width */
+  box-sizing: border-box;
+  font-size: 12px;     /* ← smaller text */
+}
+
+.leaderboard-grid > div {
+  position: relative;
+}
+
+.leaderboard-grid > div p {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  margin: 0;
+  background: rgba(0,0,0,0.5);
+  color: white;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  z-index: 1;
 }
 
 /* ---- CONTACT FORM ---- */

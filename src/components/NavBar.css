@@ -5,7 +5,9 @@ nav {
   padding: 16px 32px;
   border-bottom: 1px solid #ccc;
   background-color: #F9F6F6;
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .nav-logo img {
@@ -46,6 +48,11 @@ button {
   cursor: pointer;
   font-size: 16px;
   width: 100px;
+}
+
+button.btn-create {
+  width: auto;
+  white-space: nowrap;
 }
 
 button:hover {
