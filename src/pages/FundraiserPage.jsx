@@ -6,8 +6,10 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import useFundraiser from "../hooks/use-fundraiser.js";
+import useSpinner from "../hooks/use-spinner.js";
 import DonationCard from "../components/DonationCard.jsx";
 import DonationForm from "../components/DonationForm.jsx";
+import LoadingSpinner from "../components/LoadingSpinner.jsx";
 import "./FundraiserPage.css";
 
 function FundraiserPage() {
@@ -17,6 +19,9 @@ function FundraiserPage() {
   // Use our hook to fetch just this one fundraiser from the back end.
   // refetch lets us reload it after a donation so the total updates.
   const { fundraiser, isLoading, error, refetch } = useFundraiser(id);
+
+  // Controls the loading spinner (shows for at least 2s, then fades out)
+  const { showSpinner, fadeOut } = useSpinner(isLoading);
 
   // Controls whether the donation form is showing, and the thank-you message
   const [showForm, setShowForm] = useState(false);
@@ -35,9 +40,9 @@ function FundraiserPage() {
     refetch();
   };
 
-  // While we wait for the data to come back
-  if (isLoading) {
-    return <p>Loading fundraiser...</p>;
+  // While we wait for the data to come back, show the spinner
+  if (showSpinner) {
+    return <LoadingSpinner fadeOut={fadeOut} />;
   }
 
   // If something went wrong fetching the fundraiser

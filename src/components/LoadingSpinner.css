@@ -1,0 +1,34 @@
+/* LoadingSpinner.css */
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;   /* centre left-to-right */
+  align-items: center;       /* centre top-to-bottom */
+  min-height: 80vh;          /* fill most of the screen so it sits in the middle */
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+/* Fade the spinner away once loading is finished */
+.loading-spinner.fade-out {
+  opacity: 0;
+}
+
+/* The image itself spins around and around */
+.spinner-image {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;       /* keep the picture round, don't squash it */
+  border-radius: 50%;        /* extra insurance that it stays circular */
+  animation: spin 1s linear infinite;
+}
+
+/* spin = rotate a full circle, over and over */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

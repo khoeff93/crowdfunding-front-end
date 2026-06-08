@@ -1,0 +1,18 @@
+/* BannerCollage.css */
+
+/* The whole banner: two neat rows of photos */
+.banner-collage {
+  display: flex;          /* sit the photos side by side */
+  flex-wrap: wrap;        /* let the photos flow onto a second row */
+  gap: 6px;               /* small space between each photo */
+  width: 100%;            /* match the width of the green text box */
+  border-radius: 12px;    /* rounded corners like the text box */
+  overflow: hidden;       /* keep the rounded corners tidy */
+}
+
+/* Each photo is one sixth of a row, so 12 photos make two rows of six */
+.banner-collage-image {
+  width: calc((100% - 30px) / 6);  /* 6 photos per row, minus the 5 gaps between them */
+  height: 140px;          /* taller banner rows */
+  object-fit: cover;      /* fill the space without squashing the picture */
+}

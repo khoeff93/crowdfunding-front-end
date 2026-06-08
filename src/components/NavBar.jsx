@@ -14,6 +14,14 @@ function NavBar() {
     navigate("/");
   };
 
+  // When you click Home while already on the homepage, scroll back to the top
+  const handleHomeClick = (e) => {
+    if (location.pathname === "/") {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
   const handleScrollClick = (e, hash) => {
     e.preventDefault();
     if (location.pathname === "/") {
@@ -32,7 +40,7 @@ function NavBar() {
           <Link to="/"><img src={logo} alt="logo" /></Link>
         </div>
         <ul className="nav-links">
-          <li><Link to="/">Home</Link></li>
+          <li><Link to="/" onClick={handleHomeClick}>Home</Link></li>
           <li><a href="#about" onClick={(e) => handleScrollClick(e, "#about")}>About Us</a></li>
           <li><a href="#contact" onClick={(e) => handleScrollClick(e, "#contact")}>Contact Us</a></li>
           <li><Link to="/donation">Donate</Link></li>

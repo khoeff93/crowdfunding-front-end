@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import useFundraisers from "../hooks/use-fundraisers";
+import useSpinner from "../hooks/use-spinner";
 import getFundraiser from "../api/get-fundraiser";
 import FundraiserLeaderboard from "../components/FundraiserLeaderboard";
 import ContactForm from "../components/ContactForm";
+import BannerCollage from "../components/BannerCollage";
+import LoadingSpinner from "../components/LoadingSpinner";
 import "./HomePage.css";
 
 function HomePage() {
@@ -11,6 +14,10 @@ function HomePage() {
     const [fullFundraisers, setFullFundraisers] = useState([]);
     const [leaderboardLoading, setLeaderboardLoading] = useState(true);
     const { hash } = useLocation();
+
+    // Controls the loading spinner (shows for at least 2s, then fades out).
+    // The home page isn't ready until BOTH the list and the leaderboard load.
+    const { showSpinner, fadeOut } = useSpinner(isLoading || leaderboardLoading);
 
     useEffect(() => {
         if (!isLoading && fundraisers.length > 0) {
@@ -24,14 +31,15 @@ function HomePage() {
     }, [fundraisers, isLoading]);
 
     useEffect(() => {
-        if (hash && !isLoading && !leaderboardLoading) {
+        // Wait until the spinner is gone (so the content exists) before scrolling
+        if (hash && !showSpinner) {
             const el = document.querySelector(hash);
             if (el) el.scrollIntoView({ behavior: "smooth" });
         }
-    }, [hash, isLoading, leaderboardLoading]);
+    }, [hash, showSpinner]);
 
-    if (isLoading || leaderboardLoading) {
-        return <p>loading...</p>;
+    if (showSpinner) {
+        return <LoadingSpinner fadeOut={fadeOut} />;
     }
 
     if (error) {
@@ -40,6 +48,8 @@ function HomePage() {
 
     return (
         <div id="fundraiser-list">
+            {/* Small photo banner at the very top of the page */}
+            <BannerCollage />
             <section id="about" className="about-section">
                 <h2>About Us</h2>
                 <p>Real change means giving up the things that actually matter to you - the habits and comforts that quietly cost the Earth. Not the easy stuff. The stuff you'll actually miss.</p>
