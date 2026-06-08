@@ -7,8 +7,10 @@ export default function useFundraiser(fundraiserId) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState();
 
-  useEffect(() => {
-    // Here we pass the fundraiserId to the getFundraiser function.
+  // Pull this one fundraiser from the back end.
+  // We keep it in its own function so we can call it again later
+  // (for example, to refresh the total after someone donates).
+  const loadFundraiser = () => {
     getFundraiser(fundraiserId)
       .then((fundraiser) => {
         setFundraiser(fundraiser);
@@ -18,9 +20,14 @@ export default function useFundraiser(fundraiserId) {
         setError(error);
         setIsLoading(false);
       });
+  };
 
-    // This time we pass the fundraiserId to the dependency array so that the hook will re-run if the fundraiserId changes.
+  useEffect(() => {
+    loadFundraiser();
+
+    // Re-run if the fundraiserId changes.
   }, [fundraiserId]);
 
-  return { fundraiser, isLoading, error };
+  // refetch lets the page reload the fundraiser on demand.
+  return { fundraiser, isLoading, error, refetch: loadFundraiser };
 }

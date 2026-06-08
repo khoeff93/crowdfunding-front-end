@@ -1,35 +1,38 @@
 // FundraiserPage
 // Shows ONE fundraiser on its own page.
 // You get here by clicking a fundraiser's title, which links to /fundraiser/:id.
+// Clicking Donate opens a donation form right below the card (no login needed).
 
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import useFundraiser from "../hooks/use-fundraiser.js";
 import DonationCard from "../components/DonationCard.jsx";
-import PledgeModal from "../components/PledgeModal.jsx";
+import DonationForm from "../components/DonationForm.jsx";
 import "./FundraiserPage.css";
 
 function FundraiserPage() {
   // Grab the id from the web address (e.g. /fundraiser/3 gives id = "3")
   const { id } = useParams();
 
-  // Use our hook to fetch just this one fundraiser from the back end
-  const { fundraiser, isLoading, error } = useFundraiser(id);
+  // Use our hook to fetch just this one fundraiser from the back end.
+  // refetch lets us reload it after a donation so the total updates.
+  const { fundraiser, isLoading, error, refetch } = useFundraiser(id);
 
-  // Controls whether the donate pop-up is open, and the thank-you message
-  const [showModal, setShowModal] = useState(false);
+  // Controls whether the donation form is showing, and the thank-you message
+  const [showForm, setShowForm] = useState(false);
   const [successMessage, setSuccessMessage] = useState(null);
 
-  // Open the donate pop-up
+  // Show the donation form below the card
   const handleDonateClick = () => {
-    setShowModal(true);
+    setShowForm(true);
     setSuccessMessage(null);
   };
 
-  // After a donation works: close the pop-up and say thanks
+  // After a donation saves: hide the form, say thanks, and reload the total
   const handlePledgeSuccess = (amount) => {
-    setShowModal(false);
+    setShowForm(false);
     setSuccessMessage(`Thank you! Your donation of $${amount} has been received.`);
+    refetch();
   };
 
   // While we wait for the data to come back
@@ -58,11 +61,10 @@ function FundraiserPage() {
         onDonateClick={handleDonateClick}
       />
 
-      {/* Only show the pop-up when the user has clicked Donate */}
-      {showModal && (
-        <PledgeModal
+      {/* The donation form appears below the card once Donate is clicked */}
+      {showForm && (
+        <DonationForm
           fundraiser={fundraiser}
-          onClose={() => setShowModal(false)}
           onSuccess={handlePledgeSuccess}
         />
       )}
