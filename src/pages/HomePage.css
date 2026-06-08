@@ -99,3 +99,26 @@ main {
   border-radius: 8px;
   font-size: 16px;
 }
+
+/* ---- RESPONSIVE / MOBILE ---- */
+/* Tighten the spacing and shrink the leaderboard on small screens */
+@media (max-width: 600px) {
+  main {
+    padding: 16px;             /* less padding so content isn't squashed */
+  }
+
+  #fundraiser-list {
+    padding: 16px;
+    gap: 24px;
+  }
+
+  .about-section {
+    padding: 24px 20px;        /* smaller side padding on phones */
+  }
+
+  /* extra specific so this always wins on mobile */
+  #fundraiser-list .leaderboard-grid {
+    grid-template-columns: repeat(2, 1fr);  /* 2 columns instead of 5 */
+    column-gap: 12px;
+  }
+}

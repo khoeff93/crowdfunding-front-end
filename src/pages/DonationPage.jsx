@@ -4,7 +4,6 @@
 
 import { useState, useEffect } from "react";
 import DonationCard from "../components/DonationCard.jsx";
-import PledgeModal from "../components/PledgeModal.jsx";
 import "./DonationPage.css";
 
 const baseUrl = import.meta.env.VITE_API_URL ?? "http://localhost:8000";
@@ -14,10 +13,6 @@ function DonationPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [fetchError, setFetchError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-
-  // Which fundraiser's donate pop-up is open (null means none)
-  const [selectedFundraiser, setSelectedFundraiser] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null);
 
   // Get the list of all fundraisers from the back end
   const getFundraisers = async () => {
@@ -54,28 +49,11 @@ function DonationPage() {
     );
   });
 
-  // Open the donate pop-up for the chosen fundraiser
-  const handleDonateClick = (fundraiser) => {
-    setSelectedFundraiser(fundraiser);
-    setSuccessMessage(null);
-  };
-
-  // After a donation works: close the pop-up, say thanks, and refresh the list
-  const handlePledgeSuccess = (amount) => {
-    setSelectedFundraiser(null);
-    setSuccessMessage(`Thank you! Your donation of $${amount} has been received.`);
-    getFundraisers();
-  };
-
   return (
     <main className="donation-page">
 
       <h1>Support a Fundraiser</h1>
       <p>Browse all fundraisers below and make a difference today.</p>
-
-      {successMessage && (
-        <p className="success-message">{successMessage}</p>
-      )}
 
       <input
         type="search"
@@ -98,19 +76,10 @@ function DonationPage() {
           <DonationCard
             key={fundraiser.id}
             fundraiserData={fundraiser}
-            onDonateClick={handleDonateClick}
+            clickable
           />
         ))}
       </div>
-
-      {/* Only show the pop-up when a fundraiser has been selected */}
-      {selectedFundraiser && (
-        <PledgeModal
-          fundraiser={selectedFundraiser}
-          onClose={() => setSelectedFundraiser(null)}
-          onSuccess={handlePledgeSuccess}
-        />
-      )}
 
     </main>
   );

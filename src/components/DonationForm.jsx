@@ -15,12 +15,6 @@ function DonationForm({ fundraiser, onSuccess }) {
   const [amount, setAmount] = useState("");
   const [comment, setComment] = useState("");
 
-  // Dummy card fields - just for show, nothing is sent to a payment system
-  const [cardName, setCardName] = useState("");
-  const [cardNumber, setCardNumber] = useState("");
-  const [expiry, setExpiry] = useState("");
-  const [cvc, setCvc] = useState("");
-
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
 
@@ -96,49 +90,29 @@ function DonationForm({ fundraiser, onSuccess }) {
         rows={2}
       />
 
-      {/* Dummy payment section - not connected to anything yet */}
+      {/* Dummy payment section - just for show, not connected to anything */}
       <h4>Payment details</h4>
       <p className="dummy-note">Demo only - do not enter real card details.</p>
 
       <label>Name on card</label>
-      <input
-        type="text"
-        placeholder="Jane Doe"
-        value={cardName}
-        onChange={(e) => setCardName(e.target.value)}
-      />
+      <input type="text" placeholder="Jane Doe" />
 
       <label>Card number</label>
-      <input
-        type="text"
-        placeholder="1234 5678 9012 3456"
-        value={cardNumber}
-        onChange={(e) => setCardNumber(e.target.value)}
-      />
+      <input type="text" placeholder="1234 5678 9012 3456" />
 
       <div className="card-row">
         <div>
           <label>Expiry</label>
-          <input
-            type="text"
-            placeholder="MM/YY"
-            value={expiry}
-            onChange={(e) => setExpiry(e.target.value)}
-          />
+          <input type="text" placeholder="MM/YY" />
         </div>
         <div>
           <label>CVC</label>
-          <input
-            type="text"
-            placeholder="123"
-            value={cvc}
-            onChange={(e) => setCvc(e.target.value)}
-          />
+          <input type="text" placeholder="123" />
         </div>
       </div>
 
       <button type="submit" className="donate-submit" disabled={isSubmitting}>
-        {isSubmitting ? "Processing..." : `Donate ${amount ? "$" + amount : ""}`}
+        {isSubmitting ? "Processing..." : "Donate"}
       </button>
 
     </form>

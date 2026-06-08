@@ -16,3 +16,17 @@
   height: 140px;          /* taller banner rows */
   object-fit: cover;      /* fill the space without squashing the picture */
 }
+
+/* ---- RESPONSIVE / MOBILE ---- */
+/* On phones: show fewer photos, and fewer per row so they aren't tiny */
+@media (max-width: 600px) {
+  .banner-collage-image {
+    width: calc((100% - 12px) / 3);  /* 3 photos per row */
+    height: 100px;                   /* a little shorter on phones */
+  }
+
+  /* Hide every photo after the 6th, so we only show 2 rows of 3 */
+  .banner-collage-image:nth-child(n + 7) {
+    display: none;
+  }
+}

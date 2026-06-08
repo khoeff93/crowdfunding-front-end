@@ -148,6 +148,30 @@ main {
   margin-bottom: 32px;
 }
 
+/* Small image on the left, title sitting beside it */
+.profile-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+/* A small square thumbnail on the left of the card */
+.profile-card-image {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;   /* fill the space without stretching the picture */
+  border-radius: 8px;
+  display: block;
+  flex-shrink: 0;      /* keep it square, don't let the title squash it */
+}
+
+/* The fundraiser title sitting next to the image */
+.profile-card-title {
+  margin: 0;
+  color: #2D5720;
+}
+
 /* ---- PLEDGE PANEL ---- */
 .profile-pledge-panel {
   flex: 1;

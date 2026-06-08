@@ -59,3 +59,72 @@ button:hover {
   background-color: #79E97B;
   color: #1a1a1a;
 }
+
+/* ---- HAMBURGER BUTTON ---- */
+/* Hidden on desktop - only appears on mobile (see media query below) */
+.hamburger-button {
+  display: none;
+  background: none;        /* no green background like other buttons */
+  border: none;
+  width: auto;             /* cancel the global button width: 100px */
+  padding: 4px;
+  cursor: pointer;
+  margin-left: auto;       /* push it to the right-hand side */
+}
+
+.hamburger-button:hover {
+  background: none;        /* keep it plain, no hover colour */
+}
+
+.hamburger-button img {
+  height: 32px;
+  width: 32px;
+  display: block;
+}
+
+/* ---- RESPONSIVE / MOBILE ---- */
+/* On phones everything hides behind the hamburger button */
+@media (max-width: 700px) {
+  nav {
+    flex-wrap: wrap;           /* let the menu drop onto a new line */
+    align-items: center;
+    padding: 12px 16px;        /* a little less padding on small screens */
+  }
+
+  .nav-logo img {
+    height: 60px;              /* smaller logo so it fits */
+  }
+
+  /* Show the hamburger button on mobile */
+  .hamburger-button {
+    display: block;
+  }
+
+  /* Hide the links and buttons until the menu is opened */
+  .nav-links,
+  .nav-buttons {
+    display: none;
+    width: 100%;               /* take the full width when shown */
+  }
+
+  /* When the menu is open, show the links and buttons stacked below */
+  nav.open .nav-links,
+  nav.open .nav-buttons {
+    display: flex;
+    flex-direction: column;    /* one item per line */
+    align-items: center;
+    gap: 16px;
+    margin-top: 12px;
+  }
+
+  /* Stop the links being pinned to the centre of the bar */
+  nav.open .nav-links {
+    position: static;
+    transform: none;
+  }
+
+  /* Reset the desktop "push to the right" on the buttons */
+  nav.open .nav-buttons {
+    margin-left: 0;
+  }
+}

@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/use-auth.js";
-import FundraiserCard from "../components/FundraiserCard.jsx";
 import "./UserProfile.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -129,11 +128,21 @@ function UserProfile() {
           return (
             <div key={fundraiser.id} className="profile-fundraiser-layout">
 
-              {/* The fundraiser card */}
-              <FundraiserCard fundraiserData={fundraiser} />
-
-              {/* Pledge info and action buttons */}
+              {/* One card: image and title at the top, then the pledge info */}
               <div className="profile-pledge-panel">
+
+                {/* Small image on the left, title next to it */}
+                <div className="profile-card-header">
+                  {fundraiser.image && (
+                    <img
+                      className="profile-card-image"
+                      src={fundraiser.image}
+                      alt={fundraiser.title}
+                    />
+                  )}
+                  <h4 className="profile-card-title">{fundraiser.title}</h4>
+                </div>
+
                 <p className="pledge-raised">${totalPledged.toLocaleString()}</p>
                 <p className="pledge-goal-label">
                   raised of ${Number(fundraiser.goal).toLocaleString()} goal

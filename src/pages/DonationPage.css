@@ -31,6 +31,13 @@
   gap: 24px 40px;
 }
 
+/* Responsive: 2 columns on tablets */
+@media (max-width: 1000px) {
+  .donation-page-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 /* Responsive: stack cards into one column on small screens */
 @media (max-width: 700px) {
   .donation-page-grid {

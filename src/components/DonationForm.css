@@ -87,6 +87,7 @@
   font-size: 16px;
   cursor: pointer;
   white-space: nowrap;
+  align-self: center;   /* sit in the centre instead of stretching full width */
 }
 
 .donate-submit:hover {
