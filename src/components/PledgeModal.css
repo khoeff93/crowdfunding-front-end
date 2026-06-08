@@ -1,0 +1,43 @@
+/* PledgeModal.css */
+/* Styles for the donation pop-up box (moved here from DonationPage.css) */
+
+/* Modal */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal-box {
+  background: white;
+  padding: 24px;
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid #ccc;
+}
+
+.modal-box h2 {
+  margin-top: 0;
+}
+
+.modal-box form div {
+  margin-bottom: 12px;
+}
+
+.modal-box input[type="number"],
+.modal-box textarea {
+  width: 100%;
+  padding: 6px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.modal-box button {
+  padding: 8px 16px;
+  margin-right: 8px;
+  cursor: pointer;
+}

@@ -53,3 +53,10 @@
   font-size: 14px;
   margin: 0;
 }
+
+.create-fundraiser-form button {
+  width: auto;
+  white-space: nowrap;
+  padding: 10px 24px;
+  margin-top: 8px;
+}

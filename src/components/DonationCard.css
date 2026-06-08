@@ -1,0 +1,54 @@
+/* DonationCard.css */
+/* Styles for the fundraiser card with a Donate button. */
+/* These match how the cards looked on the Donation page before. */
+
+.donation-card {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  padding: 20px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.donation-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.donation-card h3 {
+  margin: 10px 0 6px;
+}
+
+.donation-card h3 a {
+  color: #333;
+  text-decoration: none;
+}
+
+.donation-card h3 a:hover {
+  text-decoration: underline;
+}
+
+.donation-card p {
+  margin: 4px 0;
+  font-size: 0.9rem;
+}
+
+/* Donate button */
+.donation-card button {
+  margin-top: 16px;
+  padding: 10px 24px;
+  background-color: #2D5720;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.donation-card button:hover {
+  background-color: #224418;
+}

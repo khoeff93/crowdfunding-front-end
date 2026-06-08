@@ -1,0 +1,17 @@
+/* FundraiserPage.css */
+/* Layout for the single fundraiser page. */
+/* The card itself is styled in DonationCard.css. */
+
+.fundraiser-page {
+  padding: 20px;
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.fundraiser-page .success-message {
+  color: green;
+  font-weight: bold;
+}

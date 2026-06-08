@@ -1,166 +1,25 @@
+// DonationPage
+// Shows ALL fundraisers in a grid so people can browse and donate.
+// The card and the donate pop-up now live in their own component files.
+
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import useAuth from "../hooks/use-auth.js";
-import postPledge from "../api/post-pledge.js";
+import DonationCard from "../components/DonationCard.jsx";
+import PledgeModal from "../components/PledgeModal.jsx";
 import "./DonationPage.css";
 
 const baseUrl = import.meta.env.VITE_API_URL ?? "http://localhost:8000";
-
-
-function FundraiserCard({ fundraiserData, onDonateClick }) {
-  const { id, title, description, goal, pledges = [], is_open } = fundraiserData;
-
-  const totalRaised = pledges.reduce((total, pledge) => total + Number(pledge.amount), 0);
-
-  return (
-    <div className="fundraiser-card">
-
-      {fundraiserData.image && (
-        <img src={fundraiserData.image} alt={title} />
-      )}
-
-      <h3>
-        <Link to={`/fundraiser/${id}`}>{title}</Link>
-      </h3>
-
-      {description && <p>{description}</p>}
-
-      <p><strong>${totalRaised}</strong> raised of ${Number(goal)} goal</p>
-
-      <p>{is_open ? "Status: Open" : "Status: Closed"}</p>
-
-      {is_open && (
-        <button onClick={() => onDonateClick(fundraiserData)}>
-          Donate
-        </button>
-      )}
-
-    </div>
-  );
-}
-
-
-function PledgeModal({ fundraiser, onClose, onSuccess }) {
-  const { auth } = useAuth();
-
-  const [amount, setAmount] = useState("");
-  const [comment, setComment] = useState("");
-  const [anonymous, setAnonymous] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState(null);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError(null);
-
-    const parsedAmount = parseFloat(amount);
-    if (!parsedAmount || parsedAmount <= 0) {
-      setError("Please enter a valid amount greater than $0.");
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    try {
-      await postPledge(
-        {
-          amount: parsedAmount,
-          comment: comment,
-          anonymous: anonymous,
-          fundraiser: fundraiser.id,
-        },
-        auth.token
-      );
-
-      onSuccess(parsedAmount);
-
-    } catch (err) {
-      setError(err.message);
-
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  if (!auth.token) {
-    return (
-      <div className="modal-backdrop" onClick={onClose}>
-        <div className="modal-box" onClick={(e) => e.stopPropagation()}>
-          <h2>Donate to {fundraiser.title}</h2>
-          <p>You need to be logged in to donate.</p>
-          <Link to="/login"><button>Log In</button></Link>
-          <p>Don't have an account? <Link to="/signup">Sign up</Link></p>
-          <button onClick={onClose}>Close</button>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="modal-backdrop" onClick={onClose}>
-      <div className="modal-box" onClick={(e) => e.stopPropagation()}>
-
-        <h2>Donate to {fundraiser.title}</h2>
-
-        {error && <p style={{ color: "red" }}>{error}</p>}
-
-        <form onSubmit={handleSubmit}>
-
-          <div>
-            <label>Amount ($)</label><br />
-            <input
-              type="number"
-              min="1"
-              step="0.01"
-              placeholder="0.00"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              required
-            />
-          </div>
-
-          <div>
-            <label>Comment (optional)</label><br />
-            <textarea
-              placeholder="Leave a message..."
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-              rows={3}
-            />
-          </div>
-
-          <div>
-            <label>
-              <input
-                type="checkbox"
-                checked={anonymous}
-                onChange={(e) => setAnonymous(e.target.checked)}
-              />
-              {" "}Donate anonymously
-            </label>
-          </div>
-
-          <button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? "Submitting..." : "Confirm Donation"}
-          </button>
-
-          <button type="button" onClick={onClose}>Cancel</button>
-
-        </form>
-      </div>
-    </div>
-  );
-}
-
 
 function DonationPage() {
   const [fundraisers, setFundraisers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [fetchError, setFetchError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+
+  // Which fundraiser's donate pop-up is open (null means none)
   const [selectedFundraiser, setSelectedFundraiser] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
 
+  // Get the list of all fundraisers from the back end
   const getFundraisers = async () => {
     try {
       const response = await fetch(`${baseUrl}/fundraisers/`);
@@ -181,10 +40,12 @@ function DonationPage() {
     }
   };
 
+  // Run getFundraisers once when the page first loads
   useEffect(() => {
     getFundraisers();
   }, []);
 
+  // Filter the list by what the user typed in the search box
   const filteredFundraisers = fundraisers.filter((fundraiser) => {
     const query = searchQuery.toLowerCase();
     return (
@@ -193,11 +54,13 @@ function DonationPage() {
     );
   });
 
+  // Open the donate pop-up for the chosen fundraiser
   const handleDonateClick = (fundraiser) => {
     setSelectedFundraiser(fundraiser);
     setSuccessMessage(null);
   };
 
+  // After a donation works: close the pop-up, say thanks, and refresh the list
   const handlePledgeSuccess = (amount) => {
     setSelectedFundraiser(null);
     setSuccessMessage(`Thank you! Your donation of $${amount} has been received.`);
@@ -229,9 +92,10 @@ function DonationPage() {
         <p>No fundraisers found{searchQuery ? ` for "${searchQuery}"` : ""}.</p>
       )}
 
+      {/* The grid of fundraiser cards */}
       <div className="donation-page-grid">
         {filteredFundraisers.map((fundraiser) => (
-          <FundraiserCard
+          <DonationCard
             key={fundraiser.id}
             fundraiserData={fundraiser}
             onDonateClick={handleDonateClick}
@@ -239,6 +103,7 @@ function DonationPage() {
         ))}
       </div>
 
+      {/* Only show the pop-up when a fundraiser has been selected */}
       {selectedFundraiser && (
         <PledgeModal
           fundraiser={selectedFundraiser}

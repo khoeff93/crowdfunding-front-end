@@ -13,6 +13,8 @@ function SignUpForm() {
         password: "",
     });
 
+    const [error, setError] = useState("");
+
     const handleChange = (event) => {
         const { id, value } = event.target;
         setCredentials((prevCredentials) => ({
@@ -23,6 +25,7 @@ function SignUpForm() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setError("");
 
         if (credentials.username && credentials.email && credentials.password) {
             postSignUp(
@@ -31,7 +34,11 @@ function SignUpForm() {
                 credentials.password
             ).then(() => {
                 navigate("/login");
+            }).catch((err) => {
+                setError(err.message || "Something went wrong. Please try again.");
             });
+        } else {
+            setError("Please fill in all fields.");
         }
     };
 
@@ -49,6 +56,8 @@ function SignUpForm() {
                 <label htmlFor="password">Password:</label>
                 <input type="password" id="password" placeholder="Enter password" onChange={handleChange} />
             </div>
+
+            {error && <p style={{ color: "red" }}>{error}</p>}
 
             {!auth.token && (
                 <button type="submit" onClick={handleSubmit}>
