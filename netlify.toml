@@ -1,0 +1,4 @@
+# Netlify build settings for this Vite + React app.
+[build]
+  command = "npm run build"   # the command Netlify runs to build the site
+  publish = "dist"            # Vite puts the finished website in the "dist" folder

@@ -1,0 +1,3 @@
+# Send every route back to index.html so React Router can show the right page.
+# Without this, refreshing on a page like /login or /fundraiser/1 gives a 404 on Netlify.
+/*    /index.html   200
